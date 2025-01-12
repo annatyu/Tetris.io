@@ -1,5 +1,106 @@
 ﻿  MyForm.cpp
-  .NETFramework,Version=v4.7.2.AssemblyAttributes.cpp
-  Generating Code...
-  MyForm.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-  Tetris_.vcxproj -> D:\Tetris_oop\Tetris_\Tetris.io\x64\Debug\Tetris_.exe
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(178,13): error C2360: initialization of '$S1' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(177,49):
+      see declaration of '$S1'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(179,13): error C2360: initialization of '$S2' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(178,49):
+      see declaration of '$S2'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(179,13): error C2360: initialization of '$S1' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(177,49):
+      see declaration of '$S1'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(180,13): error C2360: initialization of '$S3' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(179,49):
+      see declaration of '$S3'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(180,13): error C2360: initialization of '$S2' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(178,49):
+      see declaration of '$S2'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(180,13): error C2360: initialization of '$S1' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(177,49):
+      see declaration of '$S1'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(181,13): error C2360: initialization of '$S4' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(180,49):
+      see declaration of '$S4'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(181,13): error C2360: initialization of '$S3' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(179,49):
+      see declaration of '$S3'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(181,13): error C2360: initialization of '$S2' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(178,49):
+      see declaration of '$S2'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(181,13): error C2360: initialization of '$S1' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(177,49):
+      see declaration of '$S1'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(182,13): error C2360: initialization of '$S5' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(181,49):
+      see declaration of '$S5'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(182,13): error C2360: initialization of '$S4' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(180,49):
+      see declaration of '$S4'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(182,13): error C2360: initialization of '$S3' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(179,49):
+      see declaration of '$S3'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(182,13): error C2360: initialization of '$S2' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(178,49):
+      see declaration of '$S2'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(182,13): error C2360: initialization of '$S1' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(177,49):
+      see declaration of '$S1'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(183,13): error C2360: initialization of '$S6' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(182,49):
+      see declaration of '$S6'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(183,13): error C2360: initialization of '$S5' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(181,49):
+      see declaration of '$S5'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(183,13): error C2360: initialization of '$S4' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(180,49):
+      see declaration of '$S4'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(183,13): error C2360: initialization of '$S3' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(179,49):
+      see declaration of '$S3'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(183,13): error C2360: initialization of '$S2' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(178,49):
+      see declaration of '$S2'
+  
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(183,13): error C2360: initialization of '$S1' is skipped by 'case' label
+  (compiling source file 'MyForm.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\MyForm.h(177,49):
+      see declaration of '$S1'
+  

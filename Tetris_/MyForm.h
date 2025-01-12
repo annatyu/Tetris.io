@@ -1,365 +1,197 @@
 ﻿#pragma once
 
-#include <vector>
+#include <cliext/vector>
+#include <random>
 #include <ctime>
 
+
+using namespace System;
+using namespace System::ComponentModel;
+using namespace System::Collections;
+using namespace System::Windows::Forms;
+using namespace System::Data;
+using namespace System::Drawing;
+
+
 namespace Tetris {
+    public ref class MyForm : public Form {
+    public:
+        const static int width = 15;
+        const static int height = 25;
+        const static int k = 15;//размер клетки в пикселях
 
-	using namespace System;
-	using namespace System::ComponentModel;
-	using namespace System::Collections;
-	using namespace System::Windows::Forms;
-	using namespace System::Data;
-	using namespace System::Drawing;
+        array<int, 2>^ shape = gcnew array<int, 2>(2, 4);
+        array<int, 2>^ field = gcnew array<int, 2>(width, height);
+        Bitmap^ bitfield = gcnew Bitmap(k * (width + 1) + 1, k * (height + 3) + 1);
+        Graphics^ gr;
 
-	// Размеры игрового поля
-	const int FIELD_WIDTH = 10;
-	const int FIELD_HEIGHT = 15;
+        PictureBox^ FieldPictureBox;
+        Timer^ TickTimer;
 
-	/// <summary>
-	/// Summary for MyForm
-	/// </summary>
-	public ref class MyForm : public System::Windows::Forms::Form
-	{
-	public:
-		MyForm(void)
-		{
-			InitializeComponent();
-			InitializeGame();
-			this->DoubleBuffered = true;
-			this->KeyDown += gcnew KeyEventHandler(this, &MyForm::OnKeyDown);
-			Application::Idle += gcnew EventHandler(this, &MyForm::GameLoop);
-		}
+        MyForm() {
+            InitializeComponent();
 
-	protected:
-		~MyForm()
-		{
-			if (components)
-			{
-				delete components;
-			}
-		}
-	private: System::ComponentModel::IContainer^ components;
-	protected:
+            gr = Graphics::FromImage(bitfield);
 
-	private:
+            // Заполнение границ поля
+            for (int i = 0; i < width; i++)
+                field[i, height - 1] = 1;
+            for (int i = 0; i < height; i++) {
+                field[0, i] = 1;
+                field[width - 1, i] = 1;
+            }
 
-		cli::array<cli::array<int>^>^ gameField;
-		cli::array<cli::array<int>^>^ tetrominoes;
-		Point currentPiecePos;
-		int currentPiece;
-		int currentRotation;
-		bool gameOver;
-		DateTime lastMoveTime;
-		int score;
-		bool gameStarted;
-		int moveDelay;
+            SetShape();
+        }
 
+    private:
+        void InitializeComponent() {
+            this->FieldPictureBox = gcnew PictureBox();
+            this->TickTimer = gcnew Timer();
 
-	private: System::Windows::Forms::Timer^ timer1;
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::Button^ btn_main;
-	private: System::Windows::Forms::Label^ label2;
+            this->SuspendLayout();
 
-		  
+            // PictureBox
+            this->FieldPictureBox->Location = System::Drawing::Point(10, 10);
+            this->FieldPictureBox->Size = System::Drawing::Size(k * (width + 1), k * (height + 3));
+            this->FieldPictureBox->TabIndex = 0;
+            this->FieldPictureBox->TabStop = false;
 
-		void InitializeComponent(void)
-		{
-			this->components = (gcnew System::ComponentModel::Container());
-			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->btn_main = (gcnew System::Windows::Forms::Button());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->SuspendLayout();
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Ravie", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->label1->ForeColor = System::Drawing::SystemColors::ButtonFace;
-			this->label1->Location = System::Drawing::Point(341, 9);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(129, 40);
-			this->label1->TabIndex = 0;
-			this->label1->Text = L"Score";
-			this->label1->Click += gcnew System::EventHandler(this, &MyForm::label1_Click);
-			// 
-			// btn_main
-			// 
-			this->btn_main->Font = (gcnew System::Drawing::Font(L"Matura MT Script Capitals", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->btn_main->Location = System::Drawing::Point(187, 227);
-			this->btn_main->Name = L"btn_main";
-			this->btn_main->Size = System::Drawing::Size(114, 60);
-			this->btn_main->TabIndex = 1;
-			this->btn_main->Text = L"Start";
-			this->btn_main->UseVisualStyleBackColor = true;
-			this->btn_main->Click += gcnew System::EventHandler(this, &MyForm::btn_main_Click);
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->label2->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->label2->Location = System::Drawing::Point(374, 62);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(64, 25);
-			this->label2->TabIndex = 2;
-			this->label2->Text = L"label2";
-			// 
-			// MyForm
-			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
-			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->BackColor = System::Drawing::SystemColors::ActiveCaptionText;
-			this->ClientSize = System::Drawing::Size(482, 553);
-			this->Controls->Add(this->label2);
-			this->Controls->Add(this->btn_main);
-			this->Controls->Add(this->label1);
-			this->Name = L"MyForm";
-			this->Text = L"Tetris";
-			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
-			this->ResumeLayout(false);
-			this->PerformLayout();
+            // Timer
+            this->TickTimer->Interval = 300;
+            this->TickTimer->Tick += gcnew EventHandler(this, &MyForm::TickTimer_Tick);
 
-		}
+            // MyForm
+            this->AutoScaleDimensions = System::Drawing::SizeF(6.0F, 13.0F);
+            this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+            this->ClientSize = System::Drawing::Size(k * (width + 2), k * (height + 5));
+            this->Controls->Add(this->FieldPictureBox);
+            this->Name = L"MyForm";
+            this->Text = L"Little Tetris";
+            this->KeyDown += gcnew KeyEventHandler(this, &MyForm::MyForm_KeyDown);
 
-		void InitializeGame()
-		{
-			// Инициализация игрового поля
-			gameField = gcnew cli::array<cli::array<int>^>(FIELD_HEIGHT);
-			for (int y = 0; y < FIELD_HEIGHT; y++)
-			{
-				gameField[y] = gcnew cli::array<int>(FIELD_WIDTH);
-				for (int x = 0; x < FIELD_WIDTH; x++)
-				{
-					gameField[y][x] = 0;
-				}
-			}
+            this->ResumeLayout(false);
 
-			// Инициализация фигур Тетриса
-			tetrominoes = gcnew cli::array<cli::array<int>^>(7) {
-				gcnew cli::array<int>{0x0F00, 0x2222, 0x00F0, 0x4444},
-					gcnew cli::array<int>{0x44C0, 0x8E00, 0x6440, 0x0E20},
-					gcnew cli::array<int>{0x4460, 0x0E80, 0xC440, 0x2E00},
-					gcnew cli::array<int>{0x44C0, 0x8E00, 0x6440, 0x0E20},
-					gcnew cli::array<int>{0x4E00, 0x8C40, 0x4E00, 0x8C40},
-					gcnew cli::array<int>{0x8E00, 0x44C0, 0xE800, 0xC440},
-					gcnew cli::array<int>{0xCC00, 0xCC00, 0xCC00, 0xCC00}
-			};
+            // Запуск таймера
+            this->TickTimer->Start();
+        }
 
-			currentPiece = 0;
-			currentRotation = 0;
-			currentPiecePos = Point(FIELD_WIDTH / 2 - 2, 0);
-			gameOver = false;
-			moveDelay = 500; // миллисекунд
-			lastMoveTime = DateTime::Now;
-		}
+        void FillField() {
+            gr->Clear(Color::Black);//Очищает поле
 
-		void StartGame() {
-			// Логика для инициализации игры
-			gameStarted = true;
-			InitializeGame(); // Если у вас есть метод для инициализации игрового состояния
-			Application::Idle += gcnew EventHandler(this, &MyForm::GameLoop); // Запуск игрового цикла
-		}
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {//Проходится по всему полю
+                    if (field[i, j] == 1) {//если элемент поля занят
+                        gr->FillRectangle(Brushes::Green, i * k, j * k, k, k);//то закрашиваем зеленым
+                        gr->DrawRectangle(Pens::Black, i * k, j * k, k, k);//рисуем контур
+                    }
+                }
+            }
 
-		void GameLoop(Object^ sender, EventArgs^ e)
-		{
-			DateTime now = DateTime::Now;
-			if ((now - lastMoveTime).TotalMilliseconds > moveDelay)
-			{
-				UpdateGame();
-				this->Invalidate();
-				lastMoveTime = now;
-			}
-		}
+            for (int i = 0; i < 4; i++) {//для новой фигуры
+                gr->FillRectangle(Brushes::Red, shape[1, i] * k, shape[0, i] * k, k, k);//закрашиваем красным
+                gr->DrawRectangle(Pens::Black, shape[1, i] * k, shape[0, i] * k, k, k);//рисуем её контур
+            }
 
-		void UpdateGame()
-		{
-			if (!gameOver)
-			{
-				// Опускаем текущую фигуру вниз
-				currentPiecePos.Y++;
+            FieldPictureBox->Image = bitfield;//Устанавливает изображение в поле
+        }
 
-				// Проверяем столкновение
-				if (CheckCollision())
-				{
-					currentPiecePos.Y--;
-					PlacePiece();
-					ClearLines();
-					SpawnNewPiece();
-				}
-			}
-			else
-			{
-				// Логика завершения игры
-				MessageBox::Show(L"Game Over", L"Tetris", MessageBoxButtons::OK, MessageBoxIcon::Information);
-				InitializeGame();
-			}
-		}
+        void TickTimer_Tick(Object^ sender, EventArgs^ e) {
+            if (field[8, 3] == 1) {//если при создании новой фигуры элемент поля уже занят, то игра заканчивается
+                Application::Exit();
+            }
 
-		bool CheckCollision()
-		{
-			// Проверка столкновений текущей фигуры с границами или другими фигурами
-			for (int py = 0; py < 4; py++)
-			{
-				for (int px = 0; px < 4; px++)
-				{
-					if ((tetrominoes[currentPiece][currentRotation] & (0x8000 >> (py * 4 + px))) != 0)
-					{
-						int x = currentPiecePos.X + px;
-						int y = currentPiecePos.Y + py;
+            for (int i = 0; i < 4; i++)
+                shape[0, i]++;//каждый элемент фигуры опускаем вниз
 
-						if (x < 0 || x >= FIELD_WIDTH || y >= FIELD_HEIGHT || (y >= 0 && gameField[y][x] != 0))
-							return true;
-					}
-				}
-			}
-			return false;
-		}
+            for (int i = height - 2; i > 2; i--) {//проходимся по строкам
+                int cross = 0;
+                for (int j = 0; j < width; j++) {//проходимся по столбцам
+                    if (field[j, i] == 1)//если элемент в строке занят
+                        cross++;//то прибавляем к счетчику 1
+                }
+                if (cross == width) {//если вся строка занята
+                    for (int k = i; k > 1; k--) {//проходимя по всем столбцам где полностью они заняты
+                        for (int l = 1; l < width - 1; l++) {//проходимся по всей строке
+                            field[l, k] = field[l, k - 1];//теперь присваеваем полностью заполненой строке верхнюю строку
+                        }
+                    }
+                }
+            }
 
-		void PlacePiece()
-		{
-			// Помещаем текущую фигуру на игровое поле
-			for (int py = 0; py < 4; py++)
-			{
-				for (int px = 0; px < 4; px++)
-				{
-					if ((tetrominoes[currentPiece][currentRotation] & (0x8000 >> (py * 4 + px))) != 0)
-					{
-						int x = currentPiecePos.X + px;
-						int y = currentPiecePos.Y + py;
-						if (y >= 0)
-							gameField[y][x] = currentPiece + 1;
-					}
-				}
-			}
-		}
+            if (FindMistake()) {//если ошибка, то
+                for (int i = 0; i < 4; i++)//проходимя по всем элемнтам фигуры
+                    field[shape[1, i], --shape[0, i]]++;//поднимаем фигуру наверх и записываем, что еще 1 элемент поля занят
+                SetShape();//создаем новую фигуру
+            }
 
-		void ClearLines()
-		{
-			int Score = 0;
-			// Удаление заполненных линий
-			for (int y = 0; y < FIELD_HEIGHT; y++)
-			{
-				bool lineFull = true;
-				Score += 100;
-				for (int x = 0; x < FIELD_WIDTH; x++)
-				{
-					if (gameField[y][x] == 0)
-					{
-						lineFull = false;
-						break;
-					}
-				}
-				if (lineFull)
-				{
-					for (int ny = y; ny > 0; ny--)
-						for (int nx = 0; nx < FIELD_WIDTH; nx++)
-							gameField[ny][nx] = gameField[ny - 1][nx];
-					for (int nx = 0; nx < FIELD_WIDTH; nx++)
-						gameField[0][nx] = 0;
-				}
-			}
-		}
+            FillField();//обновляет поле
+        }
 
-		void SpawnNewPiece()
-		{
-			// Создаем новую фигуру
-			currentPiece = rand() % 7;
-			currentRotation = 0;
-			currentPiecePos = Point(FIELD_WIDTH / 2 - 2, 0);
+        void MyForm_KeyDown(Object^ sender, KeyEventArgs^ e) {//нажатие клавиш
+            switch (e->KeyCode) {
+            case Keys::A://если А
+                for (int i = 0; i < 4; i++)
+                    shape[1, i]--;//то сдвиг влево
+                if (FindMistake())//если ошибка
+                    for (int i = 0; i < 4; i++)
+                        shape[1, i]++;//то вправо
+                break;
 
-			// Если новая фигура сразу сталкивается, игра окончена
-			if (CheckCollision())
-			{
-				gameOver = true;
-			}
-		}
+            case Keys::D://если вправо
+                for (int i = 0; i < 4; i++)
+                    shape[1, i]++;
+                if (FindMistake())
+                    for (int i = 0; i < 4; i++)
+                        shape[1, i]--;//если ошибка, то влево 
+                break;
 
-	protected:
-		virtual void OnPaint(PaintEventArgs^ e) override
-		{
-			Graphics^ g = e->Graphics;
+            case Keys::W://если вверх
+                array<int, 2>^ shapeT = gcnew array<int, 2>(2, 4);
+                Array::Copy(shape, shapeT, shape->Length);//копируем массив shape в shapeT
 
-			// Рисуем игровое поле
-			for (int y = 0; y < FIELD_HEIGHT; y++)
-			{
-				for (int x = 0; x < FIELD_WIDTH; x++)
-				{
-					if (gameField[y][x] != 0)
-					{
-						g->FillRectangle(Brushes::Blue, x * 30, y * 30, 30, 30);
-						g->DrawRectangle(Pens::Black, x * 30, y * 30, 30, 30);
-					}
-				}
-			}
+                int maxx = 0, maxy = 0;
+                for (int i = 0; i < 4; i++) {
+                    if (shape[0, i] > maxy)
+                        maxy = shape[0, i];//находим максимальный y
+                    if (shape[1, i] > maxx)
+                        maxx = shape[1, i];//находим максимальный х
+                }
 
-			// Рисуем текущую фигуру
-			for (int py = 0; py < 4; py++)
-			{
-				for (int px = 0; px < 4; px++)
-				{
-					if ((tetrominoes[currentPiece][currentRotation] & (0x8000 >> (py * 4 + px))) != 0)
-					{
-						int x = currentPiecePos.X + px;
-						int y = currentPiecePos.Y + py;
-						if (y >= 0)
-						{
-							g->FillRectangle(Brushes::Red, x * 30, y * 30, 30, 30);
-							g->DrawRectangle(Pens::Black, x * 30, y * 30, 30, 30);
-						}
-					}
-				}
-			}
-		}
+                for (int i = 0; i < 4; i++) {
+                    int temp = shape[0, i];//текущий элемент складываем в temp
+                    shape[0, i] = maxy - (maxx - shape[1, i]) - 1;
+                    shape[1, i] = maxx - (3 - (maxy - temp)) + 1;//поворачиваем фигуру
+                }
 
-		void OnKeyDown(Object^ sender, KeyEventArgs^ e)
-		{
-			if (gameOver)
-				return;
+                if (FindMistake())
+                    Array::Copy(shapeT, shape, shape->Length);//если ошибка, то не поворачиваем
+                break;
+            }
+        }
 
-			switch (e->KeyCode)
-			{
-			case Keys::Left:
-				currentPiecePos.X--;
-				if (CheckCollision())
-					currentPiecePos.X++;
-				break;
-			case Keys::Right:
-				currentPiecePos.X++;
-				if (CheckCollision())
-					currentPiecePos.X--;
-				break;
-			case Keys::Down:
-				currentPiecePos.Y++;
-				if (CheckCollision())
-					currentPiecePos.Y--;
-				break;
-			case Keys::Up:
-				currentRotation = (currentRotation + 1) % 4;
-				if (CheckCollision())
-					currentRotation = (currentRotation + 3) % 4; // отмена вращения
-				break;
-			}
+        void SetShape() {//создаем новую фигуру
+            Random^ rand = gcnew Random(static_cast<int>(DateTime::Now.Millisecond));
+            int type = rand->Next(7);//выбираем тип фигуры
+            switch (type) {
+            case 0: shape = gcnew array<int, 2> {{2, 3, 4, 5}, { 8, 8, 8, 8 }}; break;
+            case 1: shape = gcnew array<int, 2> {{2, 3, 2, 3}, { 8, 8, 9, 9 }}; break;
+            case 2: shape = gcnew array<int, 2> {{2, 3, 4, 4}, { 8, 8, 8, 9 }}; break;
+            case 3: shape = gcnew array<int, 2> {{2, 3, 4, 4}, { 8, 8, 8, 7 }}; break;
+            case 4: shape = gcnew array<int, 2> {{3, 3, 4, 4}, { 7, 8, 8, 9 }}; break;
+            case 5: shape = gcnew array<int, 2> {{3, 3, 4, 4}, { 9, 8, 8, 7 }}; break;
+            case 6: shape = gcnew array<int, 2> {{3, 4, 4, 4}, { 8, 7, 8, 9 }}; break;
+            }
+        }
 
-			this->Invalidate();
-		}
-
-private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
+        bool FindMistake() {
+            for (int i = 0; i < 4; i++) {// проходимся по всем элементам фигуры
+                if (shape[1, i] >= width || shape[0, i] >= height ||//если элемент вышел за границы поля
+                    shape[1, i] <= 0 || shape[0, i] <= 0 ||
+                    field[shape[1, i], shape[0, i]] == 1)//если поле уже заполнено
+                    return true;//то это ошибка
+            }
+            return false;
+        }
+    };
 }
-
-private: System::Void btn_main_Click(System::Object^ sender, System::EventArgs^ e) {
-	this->label2->Text = "Score_result";
-	this->btn_main->Visible = false;
-	StartGame();
-}
-private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
-}
-};
-}
-
