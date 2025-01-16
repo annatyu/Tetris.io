@@ -60,7 +60,7 @@ namespace Tetris {
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(100, 425);
+			this->button1->Location = System::Drawing::Point(20, 425);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(75, 23);
 			this->button1->TabIndex = 0;
@@ -72,7 +72,7 @@ namespace Tetris {
 
             // PictureBox
             this->FieldPictureBox->Location = System::Drawing::Point(10, 10);
-            this->FieldPictureBox->Size = System::Drawing::Size(k * (width + 1), k * (height + 3));
+            this->FieldPictureBox->Size = System::Drawing::Size(k * (width), k * (height));
             this->FieldPictureBox->TabIndex = 0;
             this->FieldPictureBox->TabStop = false;
 
@@ -91,7 +91,7 @@ namespace Tetris {
             this->KeyDown += gcnew KeyEventHandler(this, &MyForm::MyForm_KeyDown);
 
             this->ResumeLayout(false);
-
+            this->Focus();
             // Запуск таймера
             this->TickTimer->Start();
         }
@@ -148,7 +148,7 @@ namespace Tetris {
             FillField();//обновляет поле
         }
         System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-             MessageBox::Show("Button clicked!"); // Действие при нажатии кнопки
+             button1->PerformClick(); // Действие при нажатии кнопки
         }
 
         System::Void WinForm_KeyDown(System::Object^ sender, KeyEventArgs^ e) {
