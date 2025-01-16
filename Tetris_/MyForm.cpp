@@ -1,5 +1,5 @@
-//#include "MyForm.h"
-#include "TetrisMainForm.h"
+#include "MyForm.h"
+//#include "TetrisMainForm.h"
 using namespace System;
 using namespace System::Windows::Forms;
 
@@ -8,6 +8,6 @@ using namespace System::Windows::Forms;
 void Main(array<String^>^ args) {
 	Application::SetCompatibleTextRenderingDefault(false);
 	Application::EnableVisualStyles();
-	Tetris::WinForm form;
+	Tetris::MyForm form;
 	Application::Run(% form);
 }

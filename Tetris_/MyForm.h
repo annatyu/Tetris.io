@@ -1,4 +1,4 @@
-﻿//pragma once
+﻿#pragma once
 
 #include <cliext/vector>
 #include <random>
@@ -27,6 +27,7 @@ namespace Tetris {
 
         PictureBox^ FieldPictureBox;
         Timer^ TickTimer;
+        Button^ button1;
 
         MyForm() {
             InitializeComponent();
@@ -46,11 +47,28 @@ namespace Tetris {
 
     private:
         void InitializeComponent() {
+            this->button1 = (gcnew System::Windows::Forms::Button());
             this->FieldPictureBox = gcnew PictureBox();
 
             this->TickTimer = gcnew Timer();
 
             this->SuspendLayout();
+            this->KeyPreview = true;
+
+            this->button1 = (gcnew System::Windows::Forms::Button());
+			this->SuspendLayout();
+			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(100, 425);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(75, 23);
+			this->button1->TabIndex = 0;
+			this->button1->Text = L"Left";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
+
+
 
             // PictureBox
             this->FieldPictureBox->Location = System::Drawing::Point(10, 10);
@@ -67,6 +85,7 @@ namespace Tetris {
             this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
             this->ClientSize = System::Drawing::Size(k * (width + 2), k * (height + 5));
             this->Controls->Add(this->FieldPictureBox);
+            this->Controls->Add(this->button1);
             this->Name = L"MyForm";
             this->Text = L"Little Tetris";
             this->KeyDown += gcnew KeyEventHandler(this, &MyForm::MyForm_KeyDown);
@@ -128,7 +147,15 @@ namespace Tetris {
 
             FillField();//обновляет поле
         }
+        System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+             MessageBox::Show("Button clicked!"); // Действие при нажатии кнопки
+        }
 
+        System::Void WinForm_KeyDown(System::Object^ sender, KeyEventArgs^ e) {
+            if (e->KeyCode == Keys::A) { // Проверяем, нажата ли клавиша "A"
+                button1->PerformClick(); // Программно вызываем событие нажатия кнопки
+            }
+        }
         void MyForm_KeyDown(Object^ sender, KeyEventArgs^ e) {//нажатие клавиш
             switch (e->KeyCode) {
             case Keys::A://если А
@@ -170,7 +197,6 @@ namespace Tetris {
                 break;
             }
         }
-
         void SetShape() {//создаем новую фигуру
             Random^ rand = gcnew Random(static_cast<int>(DateTime::Now.Millisecond));
             int type = rand->Next(7);//выбираем тип фигуры
@@ -194,5 +220,6 @@ namespace Tetris {
             }
             return false;
         }
+
     };
 }

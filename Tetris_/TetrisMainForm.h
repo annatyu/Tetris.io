@@ -54,8 +54,15 @@ namespace Tetris {
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-
+		~WinForm()
+		{
+			if (components)
+			{
+				delete components;
+			}
+		}
 	
+	protected:
 
 	private:
 		/// <summary>
@@ -104,7 +111,7 @@ namespace Tetris {
 
 		}
 
-		   void FillField() {
+	void FillField() {
 			   gr->Clear(Color::Black);//Очищает поле
 
 			   for (int i = 0; i < width; i++) {
@@ -155,7 +162,7 @@ namespace Tetris {
 
 		FillField();//обновляет поле
 	}
-		   void WinForm_KeyDown(Object^ sender, KeyEventArgs^ e) {//нажатие клавиш
+		   private: void WinForm_KeyDown(Object^ sender, KeyEventArgs^ e) {//нажатие клавиш
 			   switch (e->KeyCode) {
 			   case Keys::A://если А
 				   for (int i = 0; i < 4; i++)
