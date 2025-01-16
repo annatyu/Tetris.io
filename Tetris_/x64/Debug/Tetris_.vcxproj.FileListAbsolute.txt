@@ -4,3 +4,4 @@ D:\Tetris_oop\Tetris_\Tetris_\x64\Debug\Tetris_.vcxproj.GenerateResource.cache
 D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\x64\Debug\Tetris_.vcxproj.AssemblyReference.cache
 D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\x64\Debug\Tetris.MyForm.resources
 D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\x64\Debug\Tetris_.vcxproj.GenerateResource.cache
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\x64\Debug\Tetris.TetrisMainForm.resources

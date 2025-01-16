@@ -18,7 +18,7 @@
     <ClCompile Include="MyForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WinForm.cpp">
+    <ClCompile Include="TetrisMainForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
