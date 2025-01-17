@@ -47,6 +47,7 @@ namespace Tetris {
 				field[0, i] = 1;
 				field[width - 1, i] = 1;
 			}
+			SetShape();
 		}
 	protected:
 		/// <summary>
@@ -168,7 +169,22 @@ namespace Tetris {
 			FillField();//обновляет поле
 			FillShape();
 		}
-
+		void SetShape() {
+			Random^ rand = gcnew Random(static_cast<int>(DateTime::Now.Millisecond));
+			int type = rand->Next(0);
+			switch (type) {
+				{ case 0: shape = gcnew array<int, 2>{{2, 3, 4, 5}, { 8,8,8,8 }}; break;  }
+			}
+		}
+		bool FindMistake() {
+			for (int i = 0; i < 4; i++) {// проходимся по всем элементам фигуры
+				if (shape[1, i] >= width || shape[0, i] >= height ||//если элемент вышел за границы поля
+					shape[1, i] <= 0 || shape[0, i] <= 0 ||
+					field[shape[1, i], shape[0, i]] == 1)//если поле уже заполнено
+					return true;//то это ошибка
+			}
+			return false;
+		}
 	};
 };
 
