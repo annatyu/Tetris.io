@@ -165,15 +165,26 @@ namespace Tetris {
 					}
 				}
 			}
-
+			if (FindMistake()) {
+				for (int i = 0; i < 4; i++) {
+					field[shape[1, i], --shape[0, i]]++;
+				}
+				SetShape();
+			}
 			FillField();//обновляет поле
 			FillShape();
 		}
 		void SetShape() {
 			Random^ rand = gcnew Random(static_cast<int>(DateTime::Now.Millisecond));
-			int type = rand->Next(0);
+			int type = rand->Next(7);
 			switch (type) {
-				{ case 0: shape = gcnew array<int, 2>{{2, 3, 4, 5}, { 8,8,8,8 }}; break;  }
+				{ case 0: shape = gcnew array<int, 2>{{2, 3, 4, 5}, { 8, 8, 8, 8 }}; break; }
+				{ case 1: shape = gcnew array<int, 2>{{2, 3, 2, 3}, { 8, 8, 9, 9 }}; break; }
+				{ case 2: shape = gcnew array<int, 2>{{2, 3, 4, 4}, { 8, 8, 8, 9 }}; break; }
+				{ case 3: shape = gcnew array<int, 2>{{2, 3, 4, 4}, { 8, 8, 8, 7 }}; break; }
+				{ case 4: shape = gcnew array<int, 2>{{3, 3, 4, 4}, { 7, 8, 8, 9 }}; break; }
+				{ case 5: shape = gcnew array<int, 2>{{3, 3, 4, 4}, { 9, 8, 8, 7 }}; break; }
+				{ case 6: shape = gcnew array<int, 2>{{3, 4, 4, 4}, { 8, 7, 8, 9 }}; break; }
 			}
 		}
 		bool FindMistake() {
