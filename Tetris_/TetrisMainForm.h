@@ -185,6 +185,34 @@ namespace Tetris {
 					for (int i = 0; i < 4; i++)
 						shape[1, i]++;
 				break;
+
+			case Keys::D:
+				for (int i = 0; i < 4; i++)
+					shape[1, i]++;
+				if (FindMistake())
+					for (int i = 0; i < 4; i++)
+						shape[1, i]--;
+				break;
+
+			case Keys::W:
+				array<int, 2>^ shapeT = gcnew array<int, 2>(2, 4);
+				Array::Copy(shape, shapeT, shape->Length);
+
+				int maxx = 0, maxy = 0;
+				for (int i = 0; i < 4; i++) {
+					if (shape[0, i] > maxy)
+						maxy = shape[0, i];
+					if (shape[1, i] > maxx)
+						maxx = shape[1, i];
+				}
+				for (int i = 0; i < 4; i++) {
+					int temp = shape[0, i];
+					shape[0, i] = maxy - (maxx - shape[1, i]) - 1;
+					shape[1, i] = maxx - (3 - (maxy - temp)) + 1;
+				}
+				if (FindMistake())
+					Array::Copy(shapeT, shape, shape->Length);
+				break;
 			}
 		}
 
