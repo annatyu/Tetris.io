@@ -28,7 +28,7 @@ namespace Tetris {
 		Bitmap^ bitfield = gcnew Bitmap(k * (width + 1) + 1, k * (height + 3) + 1);
 		Graphics^ gr;
 		PictureBox^ pictureBox1;
-		Timer^ timer1;
+		System::Windows::Forms::Timer^ timer1;
 		IContainer^ components;
 
 		WinForm()

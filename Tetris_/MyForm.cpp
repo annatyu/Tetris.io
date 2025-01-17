@@ -1,5 +1,5 @@
-#include "MyForm.h"
-//#include "TetrisMainForm.h"
+//#include "MyForm.h"
+#include "TetrisMainForm.h"
 using namespace System;
 using namespace System::Windows::Forms;
 

@@ -152,8 +152,9 @@ namespace Tetris {
         }
 
         System::Void WinForm_KeyDown(System::Object^ sender, KeyEventArgs^ e) {
-            if (e->KeyCode == Keys::A) { // Проверяем, нажата ли клавиша "A"
+            if (e->Control && e->KeyCode == Keys::A) { // Проверяем, нажата ли клавиша "A"
                 button1->PerformClick(); // Программно вызываем событие нажатия кнопки
+                e->SuppressKeyPress = true;
             }
         }
         void MyForm_KeyDown(Object^ sender, KeyEventArgs^ e) {//нажатие клавиш
