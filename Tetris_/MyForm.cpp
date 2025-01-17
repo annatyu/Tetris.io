@@ -8,6 +8,6 @@ using namespace System::Windows::Forms;
 void Main(array<String^>^ args) {
 	Application::SetCompatibleTextRenderingDefault(false);
 	Application::EnableVisualStyles();
-	Tetris::MyForm form;
+	Tetris::WinForm form;
 	Application::Run(% form);
 }

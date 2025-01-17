@@ -45,11 +45,10 @@ namespace Tetris {
 				field[0, i] = 1;
 				field[width - 1, i] = 1;
 			}
-
+			
 			SetShape();
-			//
+			FillField();
 		}
-
 	protected:
 		/// <summary>
 		/// Clean up any resources being used.
@@ -226,5 +225,6 @@ namespace Tetris {
 			   return false;
 		   }
 	};
+	
 };
 

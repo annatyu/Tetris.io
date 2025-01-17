@@ -1,6 +1,3 @@
 ﻿  MyForm.cpp
-D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\TetrisMainForm.h(28,20): error C3443: The default member initializer for 'Tetris::WinForm::bitfield' is recursive
-D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\TetrisMainForm.h(28,20): fatal error C1903: unable to recover from previous error(s); stopping compilation
-  INTERNAL COMPILER ERROR in 'C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.29.30133\bin\HostX64\x64\CL.exe'
-      Please choose the Technical Support command on the Visual C++
-      Help menu, or open the Technical Support help file for more information
+  MyForm.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+  Tetris_.vcxproj -> D:\Tetris_oop\Tetris_\Tetris.io\x64\Debug\Tetris_.exe
