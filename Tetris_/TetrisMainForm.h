@@ -107,6 +107,7 @@ namespace Tetris {
 			this->Name = L"WinForm";
 			this->Text = L"Tetris";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			this->KeyDown += gcnew KeyEventHandler(this, &WinForm::WinForm_KeyDown);
 			this->ResumeLayout(false);
 
 		}
@@ -174,6 +175,19 @@ namespace Tetris {
 			FillField();//обновляет поле
 			FillShape();
 		}
+
+		void WinForm_KeyDown(Object^ sender, KeyEventArgs^ e) {
+			switch (e->KeyCode) {
+			case Keys::A:
+				for (int i = 0; i < 4; i++)
+					shape[1, i]--;
+				if (FindMistake())
+					for (int i = 0; i < 4; i++)
+						shape[1, i]++;
+				break;
+			}
+		}
+
 		void SetShape() {
 			Random^ rand = gcnew Random(static_cast<int>(DateTime::Now.Millisecond));
 			int type = rand->Next(7);

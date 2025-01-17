@@ -66,7 +66,7 @@ namespace Tetris {
 			this->button1->TabIndex = 0;
 			this->button1->Text = L"Left";
 			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
+			//this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 
 
 
@@ -91,7 +91,7 @@ namespace Tetris {
             this->KeyDown += gcnew KeyEventHandler(this, &MyForm::MyForm_KeyDown);
 
             this->ResumeLayout(false);
-            this->Focus();
+            //this->Focus();
             // Запуск таймера
             this->TickTimer->Start();
         }
@@ -147,16 +147,16 @@ namespace Tetris {
 
             FillField();//обновляет поле
         }
-        System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-             button1->PerformClick(); // Действие при нажатии кнопки
-        }
+        //System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+        //     button1->PerformClick(); // Действие при нажатии кнопки
+        //}
 
-        System::Void WinForm_KeyDown(System::Object^ sender, KeyEventArgs^ e) {
-            if (e->Control && e->KeyCode == Keys::A) { // Проверяем, нажата ли клавиша "A"
-                button1->PerformClick(); // Программно вызываем событие нажатия кнопки
-                e->SuppressKeyPress = true;
-            }
-        }
+        //System::Void WinForm_KeyDown(System::Object^ sender, KeyEventArgs^ e) {
+        //    if (e->Control && e->KeyCode == Keys::A) { // Проверяем, нажата ли клавиша "A"
+        //        button1->PerformClick(); // Программно вызываем событие нажатия кнопки
+        //        e->SuppressKeyPress = true;
+        //    }
+        //}
         void MyForm_KeyDown(Object^ sender, KeyEventArgs^ e) {//нажатие клавиш
             switch (e->KeyCode) {
             case Keys::A://если А
