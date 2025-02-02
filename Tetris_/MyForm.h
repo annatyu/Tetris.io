@@ -118,6 +118,7 @@ namespace Tetris {
 
         void TickTimer_Tick(Object^ sender, EventArgs^ e) {
             if (field[8, 3] == 1) {//если при создании новой фигуры элемент поля уже занят, то игра заканчивается
+                
                 Application::Exit();
             }
 

@@ -120,8 +120,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MyForm.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="TetrisMainForm.cpp" />
+    <ClCompile Include="Tetris_controller.cpp" />
+    <ClCompile Include="Tetris_model.cpp" />
+    <ClCompile Include="Tetris_view.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyForm.h">
@@ -130,6 +133,9 @@
     <ClInclude Include="TetrisMainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Tetris_controller.h" />
+    <ClInclude Include="Tetris_model.h" />
+    <ClInclude Include="Tetris_view.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MyForm.resx">

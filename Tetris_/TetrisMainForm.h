@@ -29,6 +29,10 @@ namespace Tetris {
 		Graphics^ gr;
 		PictureBox^ pictureBox1;
 		System::Windows::Forms::Timer^ timer1;
+
+	public:
+
+
 	private: System::ComponentModel::IContainer^ components;
 	public:
 
@@ -101,13 +105,13 @@ namespace Tetris {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(340, 513);
+			this->ClientSize = System::Drawing::Size(337, 490);
 			this->Controls->Add(this->pictureBox1);
 			this->Margin = System::Windows::Forms::Padding(4);
 			this->Name = L"WinForm";
 			this->Text = L"Tetris";
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->KeyDown += gcnew KeyEventHandler(this, &WinForm::WinForm_KeyDown);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 
 		}
@@ -123,11 +127,6 @@ namespace Tetris {
 					}
 				}
 			}
-
-			//for (int i = 0; i < 4; i++) {//для новой фигуры
-			//	gr->FillRectangle(Brushes::Red, shape[1, i] * k, shape[0, i] * k, k, k);//закрашиваем красным
-			//	gr->DrawRectangle(Pens::Black, shape[1, i] * k, shape[0, i] * k, k, k);//рисуем её контур
-			//}
 
 			pictureBox1->Image = bitfield;//Устанавливает изображение в поле
 		}
@@ -147,7 +146,9 @@ namespace Tetris {
 
 		System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) {
 			if (field[8, 3] == 1) {//если при создании новой фигуры элемент поля уже занят, то игра заканчивается
+				
 				Application::Exit();
+				
 			}
 
 			PutDownShape();
