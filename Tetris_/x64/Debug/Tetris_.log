@@ -1,5 +1,14 @@
-﻿  Tetris_model.cpp
+﻿  ITetrisView.cpp
   main.cpp
+  TetrisView.cpp
+D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\TetrisView.h(25,16): warning C4490: 'override': incorrect use of override specifier; 'Tetris::TetrisView::FillField' does not match a base ref class method
+  (compiling source file 'TetrisView.cpp')
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\TetrisView.h(25,16):
+      'new' or 'override' are only allowed when a matching base method from a ref class exists
+      D:\Tetris_oop\Tetris_\Tetris.io\Tetris_\TetrisView.h(25,16):
+      Matching base method 'Tetris::ITetrisView::FillField' is from an interface class (not a ref class)
+  
+  Tetris_model.cpp
   Generating Code...
-  main.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+  ITetrisView.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
   Tetris_.vcxproj -> D:\Tetris_oop\Tetris_\Tetris.io\x64\Debug\Tetris_.exe

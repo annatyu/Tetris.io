@@ -120,20 +120,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ITetrisView.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TetrisMainForm.cpp" />
+    <ClCompile Include="TetrisView.cpp" />
     <ClCompile Include="Tetris_controller.cpp" />
     <ClCompile Include="Tetris_interface.cpp" />
     <ClCompile Include="Tetris_model.cpp" />
     <ClCompile Include="Tetris_view.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ITetrisView.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="TetrisMainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="TetrisView.h" />
     <ClInclude Include="Tetris_model.h" />
   </ItemGroup>
   <ItemGroup>
